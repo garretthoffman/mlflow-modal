@@ -1,0 +1,2 @@
+modal-client
+mlflow>=1.12.0
