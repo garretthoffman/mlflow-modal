@@ -28,6 +28,7 @@ def run_local(name, model_uri, flavor=None, config=None):
 class ModalPlugin(BaseDeploymentClient):
     def __init__(self, target_uri):
         super().__init__(target_uri)
+        self.modal_config = ModalConfig()
         # TODO: implement
         pass
 
