@@ -1,5 +1,5 @@
 {
-    "name": "Python 3",
+    "name": "mlflow-modal",
     "build": {
         "dockerfile": "Dockerfile",
         "context": "."
