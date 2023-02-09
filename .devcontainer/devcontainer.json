@@ -1,5 +1,6 @@
 {
     "name": "mlflow-modal",
+    "remoteUser": "vscode",
     "build": {
         "dockerfile": "Dockerfile",
         "context": "."

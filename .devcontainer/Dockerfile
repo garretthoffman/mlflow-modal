@@ -13,3 +13,6 @@ RUN pip install -r requirements.txt
 # Similar to the above, but with just the development-specific requirements
 COPY requirements-dev.txt .
 RUN pip install -r requirements-dev.txt
+
+# Add vs code user so dev container doesn't run as root
+RUN useradd -ms /bin/bash vscode
