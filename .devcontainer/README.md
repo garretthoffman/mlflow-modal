@@ -1,10 +1,8 @@
-# Development
+# Development Container With VS Code
 
-## Remote Interpreter using Docker and VS Code
+For convienences a docker based development environment is provided in that can be easy built and used as a remote environment in Visual Studio Code.
 
-For convienences a docker based development environment is provided in `./.devcontainer` that can be easy built and used as a remote environment in Visual Studio Code. To leverage this development environment: 
-
-### Getting Started
+## Getting Started
 
 1. Install [Docker]
 2. Install the [Visual Studio Code]
