@@ -1,11 +1,11 @@
 import logging
-from typing import Optional
-
-from mlflow_modal.config import ModalConfig
+from typing import List, Optional
 
 import mlflow.pyfunc
-from mlflow.deployments import BaseDeploymentClient
+from mlflow.deployments import BaseDeploymentClient, PredictionsResponse
 from mlflow.exceptions import MlflowException
+
+from mlflow_modal.config import ModalConfig
 
 try:
     import ujson as json
@@ -15,9 +15,23 @@ except ModuleNotFoundError:
 logger = logging.getLogger(__name__)
 
 
-def target_help():
-    # TODO: implement
-    pass
+def target_help() -> str:
+    help_string = (
+        "The mlflow-modal plugin integrates Modal"
+        "with the MLFlow deployments API.\n\n"
+        "Before using this plugin, you must set create an account"
+        "and API Token at https://modal.com/.\n\n"
+        "You must have the following environment variabled configured to allow"
+        "the plugin to integrate with your modal workspace\n\n"
+        "    * MODAL_TOKEN_ID\n"
+        "    * MODAL_TOKEN_SECRET\n"
+        "    * MODAL_WORKSPACE\n\n"
+        "Basic usage:\n\n"
+        "    mlflow deployments <command> -t modal\n\n"
+        "For more details and examples, see the README at"
+        "https://github.com/garretthoffman/mlflow-modal/blob/main/README.md\n\n"
+    )
+    return help_string
 
 
 def run_local(name, model_uri, flavor=None, config=None):
@@ -26,39 +40,49 @@ def run_local(name, model_uri, flavor=None, config=None):
 
 
 class ModalPlugin(BaseDeploymentClient):
-    def __init__(self, target_uri):
-        super().__init__(target_uri)
+    def __init__(self, uri: str) -> None:
+        super().__init__(uri)
         self.modal_config = ModalConfig()
-        # TODO: implement
-        pass
 
-    def help(self):
+    def help(self) -> str:
         return target_help()
 
     def create_deployment(
-        self, name, model_uri, flavor=None, config=None, endpoint=None
-    ):
+        self,
+        name: str,
+        model_uri: str,
+        flavor: Optional[str] = None,
+        config: Optional[dict] = None,
+    ) -> dict:
         # TODO: implement
         pass
 
-    def delete_deployment(self, name, config=None, endpoint=None):
+    def delete_deployment(self, name: str) -> None:
         # TODO: implement
         pass
 
     def update_deployment(
-        self, name, model_uri=None, flavor=None, config=None, endpoint=None
+        self,
+        name: str,
+        model_uri: str,
+        flavor: Optional[str] = None,
+        config: Optional[dict] = None,
     ):
         # TODO: implement
         pass
 
-    def list_deployments(self, endpoint=None):
+    def list_deployments(self) -> List[dict]:
         # TODO: implement
         pass
 
-    def get_deployment(self, name, endpoint=None):
+    def get_deployment(self, name: str) -> dict:
         # TODO: implement
         pass
 
-    def predict(self, deployment_name=None, inputs=None, endpoint=None):
+    def predict(
+        self,
+        deployment_name: str = None,
+        inputs: List[List] = None,
+    ) -> PredictionsResponse:
         # TODO: implement
         pass

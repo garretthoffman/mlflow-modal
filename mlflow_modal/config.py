@@ -8,6 +8,12 @@ EXPECTED_ENV_VARs = ["MODAL_TOKEN_ID", "MODAL_TOKEN_SECRET", "MODAL_WORKSPACE"]
 class ModalConfig:
     """
     A class to validate and parse required mlflow-modal configuration
+
+    mlflow-modal expects the following environment variables to be set:
+
+    - MODAL_TOKEN_ID: your modal client token id
+    - MODAL_TOKEN_SECRET: your modal client token secret
+    - MODAL_WORKSPACE: the name of your modal workspace name
     """
 
     def __init__(self) -> None:
