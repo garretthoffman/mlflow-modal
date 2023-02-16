@@ -41,8 +41,10 @@ class DynamicStubConfig:
     def __init__(self):
         self.__dict__ = self.__shared_state
 
-    def set(self, name: str, model_path: str, deploy_config: dict) -> None:
-        parsed_deploy_config = self.parse_deploy_config(deploy_config)
+    def set(self, name: str, model_path: str, deploy_config: Optional[dict]) -> None:
+        parsed_deploy_config = (
+            self.parse_deploy_config(deploy_config) if deploy_config else {}
+        )
 
         self.name = name
         self.model_path = model_path
