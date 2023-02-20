@@ -16,7 +16,7 @@ def validate_bool_input(input: str):
 
 class DeploymentParamValidator:
     def __init__(self, expected_type: Type, validation_fn: Callable[[str], Any] = None):
-        self.expected_type = type
+        self.expected_type = expected_type
         self.validation_fn = validation_fn if validation_fn else self.expected_type
 
     def validate(self, input):
