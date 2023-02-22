@@ -42,6 +42,9 @@ def target_help() -> str:
     return help_string
 
 
+# TODO: fix handling cancel signal in run_local
+
+
 def run_local(name, model_uri, flavor=None, config=None):
     # TODO: implement support for other flavors besides pyfunc
     if flavor is not None and flavor != "python_function":
@@ -56,7 +59,7 @@ def run_local(name, model_uri, flavor=None, config=None):
     model_path = Path(_download_artifact_from_uri(model_uri))
 
     stub_config = DynamicStubConfig()
-    stub_config.set(name, model_path, config)
+    stub_config.set(f"{name}-local", model_path, config)
 
     from mlflow_modal.stub import deployment_stub, serve
 

@@ -58,6 +58,5 @@ class MlflowModel:
 
 
 def serve(stub: modal.Stub) -> None:
-    _stub = synchronizer._translate_in(stub)
-    blocking_stub = synchronizer._translate_out(_stub, Interface.BLOCKING)
+    blocking_stub = synchronizer._translate_out(stub, Interface.BLOCKING)
     blocking_stub.serve()
