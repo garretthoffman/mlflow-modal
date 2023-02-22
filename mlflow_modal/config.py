@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Any, Callable, Optional, Type, Union
 
 from mlflow.exceptions import MlflowException
@@ -41,41 +42,40 @@ class DynamicStubConfig:
     def __init__(self):
         self.__dict__ = self.__shared_state
 
-    def set(self, name: str, model_path: str, deploy_config: Optional[dict]) -> None:
-        parsed_deploy_config = (
-            self.parse_deploy_config(deploy_config) if deploy_config else {}
-        )
-
+    def set(self, name: str, model_path: Path, deploy_config: Optional[dict]) -> None:
         self.name = name
         self.model_path = model_path
-        self.deploy_config = parsed_deploy_config
+        self.deploy_config = self.parse_deploy_config(deploy_config)
 
-    def get(self, attribute, default=None) -> Optional[Union[str, dict]]:
+    def get(self, attribute, default=None) -> Optional[Union[str, Path, dict]]:
         return self.__dict__.get(attribute, default)
 
     def parse_deploy_config(self, deploy_config: dict) -> None:
         parsed_config = {}
 
-        for key, value in deploy_config.items():
-            if key not in self._DEPLOY_CONFIG_VALIDATORS:
-                raise MlflowException(
-                    message=(
-                        f"{key} is not a configurable parameter for a Modal webhook. See Modal "
-                        "webhook documentation: https://modal.com/docs/reference/modal.Stub"
-                    ),
-                    error_code=INVALID_PARAMETER_VALUE,
-                )
+        if deploy_config:
+            for key, value in deploy_config.items():
+                if key not in self._DEPLOY_CONFIG_VALIDATORS:
+                    raise MlflowException(
+                        message=(
+                            f"{key} is not a configurable parameter for a Modal webhook. See Modal "
+                            "webhook documentation: https://modal.com/docs/reference/modal.Stub"
+                        ),
+                        error_code=INVALID_PARAMETER_VALUE,
+                    )
 
-            try:
-                validated_value = self._DEPLOY_CONFIG_VALIDATORS[key].validate(value)
-                parsed_config[key] = validated_value
-            except ValueError as exc:
-                raise MlflowException(
-                    message=(
-                        f"deployment configuration '{key}' must be "
-                        f"type {self._DEPLOY_CONFIG_VALIDATORS[key].expected_type}"
-                    ),
-                    error_code=INVALID_PARAMETER_VALUE,
-                ) from exc
+                try:
+                    validated_value = self._DEPLOY_CONFIG_VALIDATORS[key].validate(
+                        value
+                    )
+                    parsed_config[key] = validated_value
+                except ValueError as exc:
+                    raise MlflowException(
+                        message=(
+                            f"deployment configuration '{key}' must be "
+                            f"type {self._DEPLOY_CONFIG_VALIDATORS[key].expected_type}"
+                        ),
+                        error_code=INVALID_PARAMETER_VALUE,
+                    ) from exc
 
         return parsed_config
