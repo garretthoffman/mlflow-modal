@@ -54,7 +54,9 @@ class MlflowModel:
     def predict(self, request: PredictRequest):
         input_data: np.ndarray = np.array(request.input)
         predictions: np.ndarray = self.model.predict(input_data)
-        return JSONResponse(content={"predictions": predictions.tolist()})
+        return JSONResponse(
+            status_code=200, content={"predictions": predictions.tolist()}
+        )
 
 
 def serve(stub: modal.Stub) -> None:

@@ -21,6 +21,7 @@ except ModuleNotFoundError:
     import json
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 def target_help() -> str:
@@ -42,9 +43,6 @@ def target_help() -> str:
     return help_string
 
 
-# TODO: fix handling cancel signal in run_local
-
-
 def run_local(name, model_uri, flavor=None, config=None):
     # TODO: implement support for other flavors besides pyfunc
     if flavor is not None and flavor != "python_function":
@@ -63,9 +61,14 @@ def run_local(name, model_uri, flavor=None, config=None):
 
     from mlflow_modal.stub import deployment_stub, serve
 
-    serve(stub=deployment_stub)
+    try:
+        serve(stub=deployment_stub)
+    except KeyboardInterrupt:
+        logger.info(
+            "Disconnecting from 'local' app run. Remote model deployment will shutdown automatically in 5 minutes."
+        )
 
-    shutil.rmtree(model_path)
+        shutil.rmtree(model_path)
 
 
 class ModalPlugin(BaseDeploymentClient):
