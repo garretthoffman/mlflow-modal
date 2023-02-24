@@ -109,7 +109,7 @@ class ModalPlugin(BaseDeploymentClient):
 
         return {
             "name": name,
-            "flavor": flavor,
+            "flavor": "python_function",
             "endpoint": self.modal_client.get_deployment_endpoint(name),
         }
 
@@ -122,13 +122,13 @@ class ModalPlugin(BaseDeploymentClient):
         model_uri: str,
         flavor: Optional[str] = None,
         config: Optional[dict] = None,
-    ) -> None:
+    ) -> dict:
         if not self._deployment_exists(name):
             raise MlflowException(
                 f"Model {name} doesn't exist. If you trying to create new "
                 "deployment, use ``create_deployment``"
             )
-        self.create_deployment(name, model_uri, flavor, config)
+        return self.create_deployment(name, model_uri, flavor, config)
 
     def list_deployments(self) -> List[dict]:
         return self.modal_client.list_deployments()
