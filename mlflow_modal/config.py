@@ -25,6 +25,20 @@ class DeploymentParamValidator:
 
 
 class DynamicStubConfig:
+    """
+    Dynamic config object to allow global state to be configured via the plugin
+    and propagated to the Modal stub. This is necesary as there are current
+    restrictions around the scope that Modal functions can be defined under
+    (must be functions defined in global scope or methods of classes defined in
+    global scope).
+
+    The intended use of this configuration is that an instance can be created
+    during plugin invocation and used to set the configuration passed by the
+    user to the plugin. Another instance is later instantiated and used by our
+    stub. This second isntance will have the same state as the first instance
+    used to set the state.
+    """
+
     __shared_state = {}
 
     _DEPLOY_CONFIG_VALIDATORS = {

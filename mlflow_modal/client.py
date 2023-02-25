@@ -16,7 +16,7 @@ EXPECTED_ENV_VARs = ["MODAL_TOKEN_ID", "MODAL_TOKEN_SECRET", "MODAL_WORKSPACE"]
 
 class ModalClient:
     """
-    A class to validate and parse required mlflow-modal configuration
+    A class to wrap a modal client and validate and parse required mlflow-modal configuration
 
     mlflow-modal expects the following environment variables to be set:
 
