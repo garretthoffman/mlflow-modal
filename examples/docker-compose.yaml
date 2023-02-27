@@ -29,24 +29,12 @@ services:
             exit 0;
             "
 
-    postgres:
-        restart: always
-        image: postgres:latest
-        container_name: postgres
-        ports:
-            - "5432:5432"
-        environment:
-            - PGDATABASE=${PGDATABASE}
-            - PGUSER=${PGUSER}
-            - PGPASSWORD=${PGPASSWORD}
-    
     mlflow:
         restart: always
         build: ./mlflow
         container_name: mlflow
         depends_on:
             - mc
-            - postgres
         ports:
             - "8000:8000"
         env_file:
@@ -55,7 +43,18 @@ services:
             - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
             - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
             - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-            - PGDATABASE=${PGDATABASE}
-            - PGUSER=${PGUSER}
-            - PGPASSWORD=${PGPASSWORD}
-        command: mlflow server --backend-store-uri postgresql://${PGUSER}:${PGPASSWORD}@postgres/${PGDATABASE}  --default-artifact-root s3://mlflow/ --host 0.0.0.0 -p 8000
+        command: mlflow server --default-artifact-root s3://mlflow/ --host 0.0.0.0 -p 8000
+
+    tensorflow:
+        build: ./tensorflow
+        container_name: tensorflow
+        depends_on:
+            - mlflow
+        env_file:
+            - .env
+        environment:
+            - MLFLOW_TRACKING_URI=http://mlflow:8000
+            - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+            - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+            - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+        command: python /src/train.py
