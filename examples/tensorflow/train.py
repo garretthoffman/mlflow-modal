@@ -25,9 +25,11 @@ def build_model(nodes):
     model = models.Sequential()
     model.add(layers.Dense(nodes, activation='relu', input_shape=(4,)))
     model.add(layers.Dense(3, activation='softmax'))
-    model.compile(optimizer='rmsprop',
-                    loss='categorical_crossentropy',
-                    metrics=['accuracy'])
+    model.compile(
+        optimizer='rmsprop',
+        loss='categorical_crossentropy',
+        metrics=['accuracy']
+    )
     
     return model
 
