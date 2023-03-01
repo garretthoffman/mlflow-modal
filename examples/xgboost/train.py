@@ -22,7 +22,6 @@ if __name__ == "__main__":
     
     X_train, X_test, y_train, y_test = parse_data()
     
-    mlflow.set_experiment("mlflow-modal-example")
     mlflow.set_tag("mlflow.runName", "xgb")
 
     model = XGBClassifier()

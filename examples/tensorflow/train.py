@@ -37,7 +37,6 @@ if __name__ == "__main__":
     
     X_train, X_test, train_labels, test_labels = parse_data()
     
-    mlflow.set_experiment("mlflow-modal-example")
     mlflow.set_tag("mlflow.runName", "tensorflow")
 
     epochs = 50
