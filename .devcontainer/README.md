@@ -16,3 +16,11 @@ For convienences a docker based development environment is provided in that can 
 [Docker]: https://www.docker.com/
 [Visual Studio Code]: https://code.visualstudio.com/
 [Dev Containers]: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
+
+## Environment Variables
+
+For convenience, `.devcontainer.json` includes placeholders to set the required environment variables - `MODAL_TOKEN_ID`, `MODAL_TOKEN_SECRET` and `MODAL_WORKSPACE` - in your local development environment. 
+
+## Local Testing
+
+An end to end test is included in `tests/test_mlflow_plugin.py`. This test is intended to be run manually as it will interact with the Modal workspace configured in your development environment. To run the test first perform a local install of the `mlflow-modal` plugin by running `pip install .` from the root of this repository. Once installed the test can be run with `python tests/test_mlflow_plugin.py`.
