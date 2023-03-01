@@ -58,3 +58,35 @@ services:
             - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
             - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
         command: python /src/train.py
+
+    xgboost:
+        build: ./xgboost
+        container_name: xgboost
+        depends_on:
+            - mlflow
+        env_file:
+            - .env
+        environment:
+            - MLFLOW_TRACKING_URI=http://mlflow:8000
+            - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+            - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+            - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+        command: python /src/train.py
+
+    mlflow-modal:
+        build: ./mlflow-modal
+        container_name: mlflow-modal
+        depends_on:
+            - mlflow
+            - tensorflow
+        env_file:
+            - .env
+        environment:
+            - MLFLOW_TRACKING_URI=http://mlflow:8000
+            - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+            - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+            - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+            - MODAL_TOKEN_ID=${MODAL_TOKEN_ID}
+            - MODAL_TOKEN_SECRET=${MODAL_TOKEN_SECRET}
+            - MODAL_WORKSPACE=${MODAL_WORKSPACE}
+        command: bin/sh -c "sleep infinity"
