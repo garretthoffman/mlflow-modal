@@ -78,7 +78,7 @@ root@80f9e6f0e670:/src# mlflow deployments predict -t modal --name iris-torch --
 The first few times you run these commands, you may receive timeout failures that look like the following:
 
 ```
-requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='garretthoffman--mlflow-iris-torch-predict.modal.run', port=443): Read timed out. (read timeout=5)
+requests.exceptions.ReadTimeout: HTTPSConnectionPool(host='{workspace}--mlflow-iris-xgb-predict.modal.run', port=443): Read timed out. (read timeout=5)
 ```
 
 This is okay! Modal does not keep containers warm by default. On this initial request, a new container is being provisioned. Our plugin allows us to pass in Modal-specific configuration via the `-C` flag. We can update our model deployments to have Modal keep the containers warm by running:
