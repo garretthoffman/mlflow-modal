@@ -78,7 +78,8 @@ services:
         container_name: mlflow-modal
         depends_on:
             - mlflow
-            - tensorflow
+            - xgboost
+            - pytorch
         env_file:
             - .env
         environment:
