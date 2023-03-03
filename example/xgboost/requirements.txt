@@ -1,4 +1,4 @@
-boto3
+boto3==1.26.83
 mlflow==2.1.1
-scikit-learn
-xgboost
+scikit-learn==1.2.1
+xgboost==1.7.4

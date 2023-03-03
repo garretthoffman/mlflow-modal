@@ -1,2 +1,2 @@
-boto3
-mlflow-modal
+boto3==1.26.83
+mlflow-modal==0.1.0

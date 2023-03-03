@@ -90,4 +90,8 @@ services:
             - MODAL_TOKEN_ID=${MODAL_TOKEN_ID}
             - MODAL_TOKEN_SECRET=${MODAL_TOKEN_SECRET}
             - MODAL_WORKSPACE=${MODAL_WORKSPACE}
-        command: bin/sh -c "sleep infinity"
+        command: >
+            /bin/sh -c "
+            echo 'mlflow-modal container is running...' &&
+            sleep infinity;
+            "
