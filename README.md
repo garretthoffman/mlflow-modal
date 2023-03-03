@@ -19,7 +19,7 @@ The following packages are required and will be installed with the plugin:
 ## Usage
 The `mlflow-modal` plugin integrates Modal with the MLFlow deployments API.
 
-Before using this plugin, you must set create an account and API Token at https://modal.com/.
+Before using this plugin, you must create an account and API Token at https://modal.com/.
 
 You must have the following environment variables configured to allow the plugin to integrate with your Modal workspace:
 
@@ -27,10 +27,12 @@ You must have the following environment variables configured to allow the plugin
 * `MODAL_TOKEN_SECRET`
 * `MODAL_WORKSPACE`
 
-The API is summarized below. For full details see the MLflow deployment plugin [Python API] and [command-line interface] documentation.
+The API is summarized below. For full details, see the MLflow deployment plugin [Python API] and [command-line interface] documentation. 
+
+See https://github.com/garretthoffman/mlflow-modal/tree/main/example for a full example.
 
 ### Create deployment
-Deploy a model built with MLflow as a Modal webhook with the desired [configuration parameters]; for example, `gpu` or `keep_warm`.  Currently this plugin only supports the `python_function` flavor of MLflow models that expect a numpy array as input and return a numpy array as output. The `python_function` flavor is the default flavor so this is not required to be specified in commands.
+Deploy a model built with MLflow as a Modal webhook with the desired [configuration parameters]; for example, `gpu` or `keep_warm`.  Currently, this plugin only supports the `python_function` flavor of MLflow models that expect a numpy array as input and return a numpy array as output. The `python_function` flavor is the default flavor, so this is not required to be specified in commands.
 
 Model deployments on Modal create a REST API endpoint at `https://<modal workspace>--mlflow-<deployment name>-predict.modal.run`. The endpoint accepts POST requests with a body specifying `input` and returns a response with a body specifying `predictions`. For example:
 
@@ -123,7 +125,7 @@ plugin.predict(name="<deployment name>", inputs=<prediction input>)
 ```
 
 ### Run the model deployment "locally"
-Run an ephemeral deployment of your model using [`modal serve`]. This will behave exactly the same as `mlflow deployments create -t modal` however the app will stop running approximately 5 minutes after you hit Ctrl-C. While the app is running Modal will create a temporary URL that you can use like the normal web endpoint created by Modal. 
+Run an ephemeral deployment of your model using [`modal serve`]. This will behave exactly the same as `mlflow deployments create -t modal` however, the app will stop running approximately 5 minutes after you hit Ctrl-C. While the app is running, Modal will create a temporary URL that you can use like the normal web endpoint created by Modal. 
 
 ##### CLI
 ```bash
