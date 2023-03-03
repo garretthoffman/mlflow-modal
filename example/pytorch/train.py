@@ -87,3 +87,9 @@ if __name__ == "__main__":
     mlflow.log_metric("test_acc", test_acc)
 
     mlflow.pytorch.log_model(model, "iris-torch")
+
+    run_id = mlflow.last_active_run().info.run_id
+    model_uri = "runs:/{}/iris-torch".format(run_id)
+
+    mv = mlflow.register_model(model_uri, "iris-torch")
+    print(f"Registered mlflow model with Name: {mv.name} and Version: {mv.version}")
