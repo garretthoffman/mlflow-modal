@@ -45,20 +45,6 @@ services:
             - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
         command: mlflow server --default-artifact-root s3://mlflow/ --host 0.0.0.0 -p 8000
 
-    tensorflow:
-        build: ./tensorflow
-        container_name: tensorflow
-        depends_on:
-            - mlflow
-        env_file:
-            - .env
-        environment:
-            - MLFLOW_TRACKING_URI=http://mlflow:8000
-            - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
-            - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-            - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-        command: python /src/train.py
-
     xgboost:
         build: ./xgboost
         container_name: xgboost
